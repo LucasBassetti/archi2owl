@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+		point="com.archimatetool.editor.exportHandler">
+      <exportHandler
+            class="br.ufes.inf.nemo.archi2owl.Archi2OWLExportProvider"
+            id="br.ufes.inf.nemo.archi2owl.exportHandler"
+            label="Model To OWL/XML">
+      </exportHandler>
+		
+   </extension>
+
+</plugin>
