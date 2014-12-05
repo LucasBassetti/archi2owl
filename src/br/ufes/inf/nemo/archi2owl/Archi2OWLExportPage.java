@@ -53,7 +53,7 @@ public class Archi2OWLExportPage extends WizardPage {
 	private Text 	fFolderTextField,
 					fFolderNamespaceField;
 	
-	private Combo fComboViewpoint;
+	private Combo 	fComboViewpoint;
 	
 	private Tree 	businessTree, 
 					applicationTree,
@@ -273,7 +273,10 @@ public class Archi2OWLExportPage extends WizardPage {
 		      } 
 	      });
 		
-		//Viewpoints
+		/* ================================================================================
+	     * Create a selection by Viewpoints according with ArchiMate Specification:
+	     * http://pubs.opengroup.org/architecture/archimate2-doc/chap08.html#_Toc371945230
+	     ================================================================================== */
 		
 		Group viewpointGroup = new Group(container, SWT.NULL);
 		viewpointGroup.setText("Choose the Viewpoint");
@@ -281,106 +284,68 @@ public class Archi2OWLExportPage extends WizardPage {
 		viewpointGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));     
         
 		fComboViewpoint = new Combo(viewpointGroup, SWT.READ_ONLY);
-		
-		//System.out.println(ViewpointsManager.INSTANCE.getAllViewpoints().toString());
-		
+
 		String items[] = new String[ViewpointsManager.INSTANCE.getAllViewpoints().size()];
 		
 		for(int i = 0; i < items.length; i++){
 			items[i] = ViewpointsManager.INSTANCE.getViewpoint(i).getName();
-			//System.out.println(items[i]);
 		}
 		
 		fComboViewpoint.setItems(items);
 		fComboViewpoint.select(0);
 
-		//Views
+	    /* ================================================================================
+	     * Create the Groups of the Trees separate by layers 
+	     * 		Business; Application; Technology; 
+	     * 		Motivation; Implementation&Migration; Relation 
+	     ================================================================================ */
 
 		TabFolder folder = new TabFolder(container, SWT.NULL);
 		folder.setLayout(new GridLayout(1, true));
 		folder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)); 
 		
-		//Business
-		
-        Group businessGroup = new Group(folder, SWT.NULL);
-        //businessGroup.setText("Choose the Views");
-        businessGroup.setLayout(new GridLayout(1, true));
-        businessGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
-        TabItem businessTab = new TabItem(folder, SWT.NULL);
-	    businessTab.setText("Business");
-	    businessTab.setControl(businessGroup);
+		//Business	
+        Group businessGroup = createTreeGroup(folder);
+        TabItem businessTab = createTabItem(folder, "Business");
+        businessTab.setControl(businessGroup);
             
-	    //Application
-	    
-        Group applicationGroup = new Group(folder, SWT.NULL);
-        applicationGroup.setLayout(new GridLayout(1, true));
-        applicationGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    //Application	    
+        Group applicationGroup = createTreeGroup(folder);
+        TabItem applicationTab = createTabItem(folder, "Application");
+        applicationTab.setControl(applicationGroup);
         
-	    TabItem applicationTab = new TabItem(folder, SWT.NULL);
-	    applicationTab.setText("Application");
-	    applicationTab.setControl(applicationGroup);
-        
-	    //Technology
-	    
-	    Group technologyGroup = new Group(folder, SWT.NULL);
-	    technologyGroup.setLayout(new GridLayout(1, true));
-	    technologyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
-	    TabItem technologyTab = new TabItem(folder, SWT.NULL);
-	    technologyTab.setText("Technology");
-	    technologyTab.setControl(technologyGroup);
-	    
+	    //Technology    
+        Group technologyGroup = createTreeGroup(folder);
+        TabItem technologyTab = createTabItem(folder, "Technology");
+        technologyTab.setControl(technologyGroup);
+
 	    //Motivation
-	    
-	    Group motivationGroup = new Group(folder, SWT.NULL);
-	    motivationGroup.setLayout(new GridLayout(1, true));
-	    motivationGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
-	    TabItem motivationTab = new TabItem(folder, SWT.NULL);
-	    motivationTab.setText("Motivation");
-	    motivationTab.setControl(motivationGroup);
+        Group motivationGroup = createTreeGroup(folder);
+        TabItem motivationTab = createTabItem(folder, "Motivation");
+        motivationTab.setControl(motivationGroup);
 	    
 	    //Implementation & Migration
+        Group implementationMigrationGroup = createTreeGroup(folder);
+        TabItem implementationMigrationTab = createTabItem(folder, "Implementation and Migration");
+        implementationMigrationTab.setControl(implementationMigrationGroup);
 	    
-	    Group implementationMigrationGroup = new Group(folder, SWT.NULL);
-	    implementationMigrationGroup.setLayout(new GridLayout(1, true));
-	    implementationMigrationGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
-	    TabItem implementationMigrationTab= new TabItem(folder, SWT.NULL);
-	    implementationMigrationTab.setText("Implementation and Migration");
-	    implementationMigrationTab.setControl(implementationMigrationGroup);
+	    //Relation   
+        Group relationsGroup = createTreeGroup(folder);
+        TabItem relationsTab = createTabItem(folder, "Relations");
+        relationsTab.setControl(relationsGroup);
 	    
-	    //Relation
+	    /* ================================================================================
+	     * Create a Tree of elements separate by layers 
+	     * 		Business; Application; Technology; 
+	     * 		Motivation; Implementation&Migration; Relation 
+	     ================================================================================ */
 	    
-	    Group relationsGroup = new Group(folder, SWT.NULL);
-	    relationsGroup.setLayout(new GridLayout(1, true));
-	    relationsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
-	    TabItem relationsTab = new TabItem(folder, SWT.NULL);
-	    relationsTab.setText("Relation");
-	    relationsTab.setControl(relationsGroup);
-	    
-	    
-	    //Trees
-	    
-        businessTree = new Tree(businessGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-        businessTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-        applicationTree = new Tree(applicationGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-        applicationTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
-        technologyTree = new Tree(technologyGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-        technologyTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
-        motivationTree = new Tree(motivationGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-        motivationTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
-        implementationMigrationTree = new Tree(implementationMigrationGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-        implementationMigrationTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        
-		relationsTree = new Tree(relationsGroup, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-		relationsTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        businessTree = createTree(businessGroup);
+        applicationTree = createTree(applicationGroup);
+        technologyTree = createTree(technologyGroup);
+        motivationTree = createTree(motivationGroup);
+        implementationMigrationTree = createTree(implementationMigrationGroup);
+        relationsTree = createTree(relationsGroup);
 		
 		for(EObject eObject : elementsList){
 			
@@ -436,7 +401,42 @@ public class Archi2OWLExportPage extends WizardPage {
         //Set full screen
         this.getShell().setMaximized(true);
 	}
+	
+	public Group createTreeGroup(TabFolder folder){
+		
+		Group treeGroup = new Group(folder, SWT.NULL);
+		treeGroup.setLayout(new GridLayout(1, true));
+		treeGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		return treeGroup;
+	}
 
+	public TabItem createTabItem(TabFolder folder, String text){
+		
+		TabItem tabItem = new TabItem(folder, SWT.NULL);
+		tabItem.setText(text);
+		
+		return tabItem;
+	}
+	
+	/**
+	 * Method to create Tree
+	 * @author Lucas Bassetti
+	 */
+	
+	public Tree createTree(Group group){
+		
+		Tree tree = new Tree(group, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		return tree;
+	}
+	
+	
+	/**
+	 * Method to auto select element on Tree by Viewpoint
+	 * @author Lucas Bassetti
+	 */
 	
 	private void changeSelectedTree(){
 
@@ -511,6 +511,11 @@ public class Archi2OWLExportPage extends WizardPage {
 		}
 
 	}
+	
+	/**
+	 * Method to add all elements in a list
+	 * @author Lucas Bassetti
+	 */
 	
 	private void writeFolder(IFolder folder) {
         

@@ -49,6 +49,11 @@ public class Archi2OWLExport {
     	
     }
     
+    /**
+	 * Method to get selected elements
+	 * @author Lucas Bassetti
+	 */
+    
     private List<IArchimateElement> getSelectedList(Archi2OWLExportPage fPage){
     	
     	List<IArchimateElement> selectedList = new ArrayList<IArchimateElement>();
