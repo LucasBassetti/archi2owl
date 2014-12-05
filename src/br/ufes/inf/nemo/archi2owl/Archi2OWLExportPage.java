@@ -164,7 +164,11 @@ public class Archi2OWLExportPage extends WizardPage {
             }
         });
 
-        //Layers 
+        /* ================================================================================
+	     * Create a selection by layer
+	     * 		Business; Application; Technology; 
+	     * 		Motivation; Implementation&Migration; Relation 
+	     ================================================================================ */
         
         Group layerGroup = new Group(container, SWT.NULL);
         layerGroup.setText("Choose the Layers");
@@ -295,7 +299,7 @@ public class Archi2OWLExportPage extends WizardPage {
 		fComboViewpoint.select(0);
 
 	    /* ================================================================================
-	     * Create the Groups of the Trees separate by layers 
+	     * Create selection by element separate by layers 
 	     * 		Business; Application; Technology; 
 	     * 		Motivation; Implementation&Migration; Relation 
 	     ================================================================================ */
@@ -402,6 +406,11 @@ public class Archi2OWLExportPage extends WizardPage {
         this.getShell().setMaximized(true);
 	}
 	
+	/**
+	 * Method to create Groups
+	 * @author Lucas Bassetti
+	 */
+	
 	public Group createTreeGroup(TabFolder folder){
 		
 		Group treeGroup = new Group(folder, SWT.NULL);
@@ -411,6 +420,11 @@ public class Archi2OWLExportPage extends WizardPage {
 		return treeGroup;
 	}
 
+	/**
+	 * Method to Tab Items
+	 * @author Lucas Bassetti
+	 */
+	
 	public TabItem createTabItem(TabFolder folder, String text){
 		
 		TabItem tabItem = new TabItem(folder, SWT.NULL);
@@ -420,7 +434,7 @@ public class Archi2OWLExportPage extends WizardPage {
 	}
 	
 	/**
-	 * Method to create Tree
+	 * Method to create Trees
 	 * @author Lucas Bassetti
 	 */
 	
@@ -431,7 +445,6 @@ public class Archi2OWLExportPage extends WizardPage {
 		
 		return tree;
 	}
-	
 	
 	/**
 	 * Method to auto select element on Tree by Viewpoint
