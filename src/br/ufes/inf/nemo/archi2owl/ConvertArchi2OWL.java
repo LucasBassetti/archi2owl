@@ -3,7 +3,6 @@ package br.ufes.inf.nemo.archi2owl;
 import java.util.HashMap;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;

@@ -93,6 +93,11 @@ public class Archi2OWLExportPage extends WizardPage {
     	
 	}
 
+	/**
+	 * Comparator to sort ArchiMate elements and relations
+	 * @author Lucas Bassetti
+	 */
+	
 	class EComparator implements Comparator<IArchimateElement> {
 	    public int compare(IArchimateElement eobject, IArchimateElement eobject2) {
 	    	
