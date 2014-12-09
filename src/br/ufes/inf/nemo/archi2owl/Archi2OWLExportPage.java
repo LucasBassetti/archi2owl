@@ -542,6 +542,12 @@ public class Archi2OWLExportPage extends WizardPage {
         		elementsList.add((IArchimateElement) eObject);
         	}
         }
+        
+        if(!folder.getFolders().isEmpty()){
+        	for(IFolder f : folder.getFolders()){
+        		writeFolder(f);
+        	}
+        }
        
     }
 
